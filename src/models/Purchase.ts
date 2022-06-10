@@ -1,7 +1,6 @@
 import { Field, ID, ObjectType, registerEnumType } from "type-graphql";
 import { PurchaseFormat } from "../enums/purchaseFormat";
 import { Category } from "./Category";
-import { CreditCard } from "./CreditCard";
 
 registerEnumType(PurchaseFormat, {
   name: "PurchaseFormat",
@@ -21,10 +20,6 @@ export class Purchase {
 
   @Field(() => PurchaseFormat)
   format: PurchaseFormat;
-
-  @Field(() => CreditCard)
-  creditCard: CreditCard;
-  creditCardId: string;
 
   @Field(() => Category)
   category: Category;

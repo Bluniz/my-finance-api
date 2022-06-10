@@ -13,11 +13,10 @@ input CreateUserInput {
   name: String!
 }
 
-type CreditCard {
-  dueDate: Float!
-  id: ID!
-  name: String!
-}
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
 
 type Mutation {
   createUser(data: CreateUserInput!): User!
@@ -25,7 +24,6 @@ type Mutation {
 
 type Purchase {
   category: Category!
-  creditCard: CreditCard!
   format: PurchaseFormat!
   id: ID!
   price: String!
@@ -43,7 +41,7 @@ type Query {
 }
 
 type User {
-  creditCards: [CreditCard!]!
+  dueDate: DateTime
   email: String!
   id: ID!
   name: String!

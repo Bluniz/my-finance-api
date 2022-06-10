@@ -1,5 +1,4 @@
 import { Field, ID, ObjectType } from "type-graphql";
-import { CreditCard } from "./CreditCard";
 import { Purchase } from "./Purchase";
 
 @ObjectType("User")
@@ -13,8 +12,8 @@ export class User {
   @Field()
   email: string;
 
-  @Field(() => [CreditCard])
-  creditCards: CreditCard[];
+  @Field({ nullable: true })
+  dueDate?: Date;
 
   @Field(() => [Purchase])
   purchases: Purchase[];
