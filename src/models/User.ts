@@ -7,13 +7,16 @@ export class User {
   id: string;
 
   @Field()
+  firebaseId: String;
+
+  @Field()
   name: string;
 
   @Field()
   email: string;
 
   @Field({ nullable: true })
-  dueDate?: Date;
+  dueDate?: number;
 
   @Field(() => [Purchase])
   purchases: Purchase[];

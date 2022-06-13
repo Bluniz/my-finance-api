@@ -6,4 +6,7 @@ export class CreateUserInput {
   name: string;
   @Field()
   email: string;
+
+  @Field()
+  firebaseId: string;
 }

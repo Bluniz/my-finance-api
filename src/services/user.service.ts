@@ -5,20 +5,31 @@ import { ObjectID } from "bson";
 interface CreateUserParams {
   name: string;
   email: string;
+  firebaseId: string;
 }
 
 @Service()
 export class UserService {
   constructor(@Inject("PRISMA_SERVICE") private prisma: PrismaService) {}
 
-  async createUser({ name, email }: CreateUserParams) {
-    const user = await this.prisma.user.findUnique({
+  async createUser({ name, email, firebaseId }: CreateUserParams) {
+    const userWithSameId = await this.prisma.user.findUnique({
       where: {
-        email,
+        firebaseId,
       },
     });
 
-    if (user) {
+    if (userWithSameId) {
+      throw new Error("Already exists a user with the same ID");
+    }
+
+    const userWithSameEmail = await this.prisma.user.findUnique({
+      where: {
+        firebaseId,
+      },
+    });
+
+    if (userWithSameEmail) {
       throw new Error("Already exists a user with the same email");
     }
 
@@ -27,6 +38,23 @@ export class UserService {
         id: new ObjectID().toString(),
         name,
         email,
+        firebaseId,
+      },
+    });
+  }
+
+  async getUserById(id: string) {
+    return this.prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
+
+  async getUserByFireaseId(firebaseId: string) {
+    return this.prisma.user.findUnique({
+      where: {
+        firebaseId,
       },
     });
   }

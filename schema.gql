@@ -10,13 +10,9 @@ type Category {
 
 input CreateUserInput {
   email: String!
+  firebaseId: String!
   name: String!
 }
-
-"""
-The javascript `Date` as string. Type represents date and time as the ISO Date string.
-"""
-scalar DateTime
 
 type Mutation {
   createUser(data: CreateUserInput!): User!
@@ -37,12 +33,13 @@ enum PurchaseFormat {
 }
 
 type Query {
-  me: String!
+  me: User!
 }
 
 type User {
-  dueDate: DateTime
+  dueDate: Float
   email: String!
+  firebaseId: String!
   id: ID!
   name: String!
   purchases: [Purchase!]!

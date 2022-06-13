@@ -9,6 +9,8 @@ import dotenv from "dotenv";
 import { UserResolver } from "./src/resolvers/UserResolver";
 import { PrismaService } from "./src/database/prisma/prisma.service";
 import { UserService } from "./src/services/user.service";
+import { customAuthChecker } from "./src/guards/Auth.guard";
+
 //? Resolvers
 //! São basicamente os controlers que utilizamos no Rest
 //! Os resolvers que lidam com as informações que pegamos do backend
@@ -30,9 +32,16 @@ async function main() {
     resolvers: [UserResolver],
     emitSchemaFile: path.resolve(__dirname, "schema.gql"),
     container: Container,
+    authChecker: customAuthChecker,
   });
 
-  const server = new ApolloServer({ schema });
+  const server = new ApolloServer({
+    schema,
+    introspection: true,
+    context: ({ req }) => {
+      return { req };
+    },
+  });
   const prisma = new PrismaService();
 
   await prisma.connect().then(() => {
