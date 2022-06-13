@@ -8,6 +8,10 @@ type Category {
   name: String!
 }
 
+input CreateCategoryInput {
+  name: String!
+}
+
 input CreateUserInput {
   email: String!
   firebaseId: String!
@@ -15,6 +19,7 @@ input CreateUserInput {
 }
 
 type Mutation {
+  createCategory(data: CreateCategoryInput!): Category!
   createUser(data: CreateUserInput!): User!
 }
 
@@ -33,6 +38,9 @@ enum PurchaseFormat {
 }
 
 type Query {
+  getCategoryByID(id: String!): Category!
+  getCategoryByName(name: String!): Category!
+  listAllCategories: [Category!]!
   me: User!
 }
 

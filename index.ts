@@ -10,6 +10,8 @@ import { UserResolver } from "./src/resolvers/UserResolver";
 import { PrismaService } from "./src/database/prisma/prisma.service";
 import { UserService } from "./src/services/user.service";
 import { customAuthChecker } from "./src/guards/Auth.guard";
+import { CategoryService } from "./src/services/category.service";
+import { CategoryResolver } from "./src/resolvers/CategoryResolver";
 
 //? Resolvers
 //! São basicamente os controlers que utilizamos no Rest
@@ -27,9 +29,14 @@ Container.set({
   factory: () => new UserService(new PrismaService()),
 });
 
+Container.set({
+  id: "CATEGORY_SERVICE",
+  factory: () => new CategoryService(new PrismaService()),
+});
+
 async function main() {
   const schema = await buildSchema({
-    resolvers: [UserResolver],
+    resolvers: [UserResolver, CategoryResolver],
     emitSchemaFile: path.resolve(__dirname, "schema.gql"),
     container: Container,
     authChecker: customAuthChecker,
