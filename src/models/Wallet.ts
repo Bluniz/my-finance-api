@@ -14,4 +14,7 @@ export class Wallet {
 
   @Field(() => [Purchase])
   purchases: Purchase[];
+
+  @Field()
+  userId: string;
 }

@@ -12,6 +12,8 @@ import { UserService } from "./src/services/user.service";
 import { customAuthChecker } from "./src/guards/Auth.guard";
 import { CategoryService } from "./src/services/category.service";
 import { CategoryResolver } from "./src/resolvers/CategoryResolver";
+import { WalletService } from "./src/services/wallet.service";
+import { WalletResolver } from "./src/resolvers/WalletResolver";
 
 //? Resolvers
 //! São basicamente os controlers que utilizamos no Rest
@@ -34,9 +36,14 @@ Container.set({
   factory: () => new CategoryService(new PrismaService()),
 });
 
+Container.set({
+  id: "WALLET_SERVICE",
+  factory: () => new WalletService(new PrismaService()),
+});
+
 async function main() {
   const schema = await buildSchema({
-    resolvers: [UserResolver, CategoryResolver],
+    resolvers: [UserResolver, CategoryResolver, WalletResolver],
     emitSchemaFile: path.resolve(__dirname, "schema.gql"),
     container: Container,
     authChecker: customAuthChecker,

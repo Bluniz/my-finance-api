@@ -18,9 +18,15 @@ input CreateUserInput {
   name: String!
 }
 
+input CreateWalletInput {
+  dueDate: Float!
+  name: String!
+}
+
 type Mutation {
   createCategory(data: CreateCategoryInput!): Category!
   createUser(data: CreateUserInput!): User!
+  createWallet(data: CreateWalletInput!): Wallet!
 }
 
 type Purchase {
@@ -42,13 +48,21 @@ type Query {
   getCategoryByName(name: String!): Category!
   listAllCategories: [Category!]!
   me: User!
+  myWallets: [Wallet!]!
 }
 
 type User {
-  dueDate: Float
   email: String!
   firebaseId: String!
   id: ID!
   name: String!
+  wallets: [Wallet!]!
+}
+
+type Wallet {
+  dueDate: Float!
+  id: ID!
+  name: String!
   purchases: [Purchase!]!
+  userId: String!
 }
